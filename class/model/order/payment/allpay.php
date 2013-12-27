@@ -1,27 +1,33 @@
 <?php
-require_once "returncode/esun.php";
-class Model_Order_Payment_Esun {
+require_once "returncode/allpay.php";
+require_once "class/mcrypt/aes.php";
+class Model_Order_Payment_Allpay {
     //put your code here
     protected $config;
-    protected $mackey;
+    protected $hash = array();
     protected $mode;
+    protected $fields = array();
     protected $codedata = array();
     protected $url = array(
-        'testing' => "https://acqtest.esunbank.com.tw/acq_online/online/sale42.htm",
-        'running' => "https://acq.esunbank.com.tw/acq_online/online/sale42.htm",
+        'testing' => "http://pay-stage.allpay.com.tw/payment/gateway",
+        'running' => "https://pay.allpay.com.tw/payment/gateway",
     );
     protected $template = "templates/ws-cart-card-transmit-tpl.html";
-    function __construct($config,$mackey,$mode="testing") {
+    protected $xml_template = "templates/allpay-xmldata.xml";
+    function __construct($config,$hash,$mode="testing") {
         $this->config = $config;
-        $this->mackey = $mackey;
         $this->mode = $mode;
-        $this->codedata = array_merge($this->codedata,$this->config);
+        $this->hash = $hash;
+        $this->fields['MerchantID'] = $this->config['MerchantID'];
+        $this->fields['PaymentType'] = $this->config['PaymentType'];
+        $this->codedata['MerchantID'] = $this->config['MerchantID'];
     }
     //結帳
     function checkout($o_id,$total_price,$extra_info=array()){
-        $this->codedata['ono'] = strtoupper($o_id);
-        $this->codedata['ta'] = $total_price;
-        $this->codedata['u'] = "http://localhost/payment_esun/card-test3.php";//授權結果回傳接收頁
+        $this->codedata['MerchantTradeNo'] = $o_id;
+        $this->codedata['MerchantTradeDate'] = date("Y/m/d H:i:s");
+        $this->codedata['TotalAmount'] = $total_price;
+        $this->codedata = array_merge($this->codedata,$this->config['params']);
         if(!empty($extra_info)){
             foreach($extra_info as $k => $v){
                 if(!isset($this->codedata[$k])){
@@ -29,53 +35,45 @@ class Model_Order_Payment_Esun {
                 }
             }
         }
+        $this->fields['XMLData'] = $this->make_xml();
         $tpl = new TemplatePower($this->template);
         $tpl->prepare();
-        foreach($this->codedata as $k => $v){
+        $tpl->assignGlobal("AUTHORIZED_URL",$this->url[$this->mode]);
+        foreach($this->fields as $k => $v){
             $tpl->newBlock("CARD_FIELD_LIST");
             $tpl->assign(array(
-                "TAG_KEY"   => strtoupper($k),
-                "TAG_VALUE" => $v,
+                "TAG_KEY" => $k,
+                "TAG_VALUE" => $v
             ));
         }
-        $code = $this->make_code($this->codedata);
-        $tpl->assignGlobal("TAG_INPUT_STR",$code[0]);
-        $tpl->newBlock("CARD_FIELD_LIST");
-        $tpl->assign(array(
-            "TAG_KEY"   => "M",
-            "TAG_VALUE" => $code[1]
-        ));
-        $tpl->assignGlobal("ESUN_AUTHORIZED_URL",$this->url[$this->mode]);
         $tpl->printToScreen();
     }
-    //製作押碼
-    function make_code($codedata){
-        $input_str = implode("&",$codedata) . "&" . $this->mackey;
-        return array($input_str,md5($input_str));
-    }
     //更新訂單
-    function update_order($db,$result){
-        $oid = $result['ONO'];
-        if($result['RC']=='00'){ //交易成功
-            if($this->validate($result)){
-                //更新訂單資料
-                $sql = "update ".$db->prefix("order")." set some_col = 'somevalue' .... where o_id='".$oid."'";
-            }else{
-                throw new Exception("return result doesn't valiated!");
-            }
+    function update_order($db,SimpleXMLElement $result){
+        $oid = $result->Data->MerchantTradeNo;
+        if($result->Data->RtnCode=='1'){ //交易成功
+            $sql = "update ".$db->prefix("order")." set some_col = 'somevalue' .... where o_id='".$oid."'";
         }else{
             //更新訂單狀態
-            if($result['RC']!='G6'){ //錯誤原因非訂單編號重複
+            if($result->Data->RtnCode!='10100054'){ //錯誤原因非訂單編號重複
                 $sql = "update ".$db->prefix("order")." set o_status='10' where o_id='".$oid."'";
             }
         }
          return $sql;
     }
-    //驗證回傳結果
-    function validate($result){
-        $m = array_pop($result);
-        $code = $this->make_code($result);
-        return ($m==$code[1]);
+    /*製作xml*/
+    function make_xml(){
+        $tpl = new TemplatePower("templates/allpay-xmldata.xml");
+        $tpl->prepare();
+        foreach($this->codedata as $k => $v){
+            if(!in_array($k,array("MerchantTradeDate"))){
+                $tpl->assignGlobal($k,urlencode($v));
+            }else{
+                $tpl->assignGlobal($k,$v);
+            }
+        }
+        $XMLdata =  $tpl->getOutputContent();
+        return Mcrypt_Aes::aes128cbcEncrypt($XMLdata , $this->hash['IV'] , $this->hash['Key']);
     }
     
 }

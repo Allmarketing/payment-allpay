@@ -23,5 +23,6 @@ class Model_Order_Payment_Returncode_Allpay {
         '10100066' => '交易描述空白',
         '10100067' => '編碼格式空白',
         '10100068' => '交易金額不符',
+        '10100113' => 'GwID Is Error.',
     );
 }

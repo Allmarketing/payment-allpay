@@ -6,8 +6,7 @@ payment-esun
 
 前置設定
 ---------------
-1.設定conf/creditcard.php裡的 $cms_cfg['creditcard']['mid'] (特店編號)和 $cms_cfg['esunkey'] (MAC key)。<br/>
-2.變更class/model/order/payment/esun.php第24行，改為測試環境接收授權結果的url，依documents/網路收單系統交易規格.pdf第二頁的說明，URL不可包含【#】、【?】及【&】字元.
+1.設定conf/creditcard.php裡的 $cms_cfg['creditcard']['MerchantID'] (特店編號)、 $cms_cfg['creditcard']['params']各項目及$cms_cfg['Hash']各項目。<br/>
 
 
 測試流程

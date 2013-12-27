@@ -1,6 +1,7 @@
 <?php
 require_once "TP/class.TemplatePower.inc.php";
-require_once "class/model/order/payment/esun.php"; 
+require_once "class/model/order/payment/allpay.php"; 
+require_once "class/mcrypt/aes.php"; 
 require_once "conf/config.inc.php";
 require_once "conf/creditcard.php";
 require_once "conf/database.php";

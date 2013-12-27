@@ -1,0 +1,25 @@
+SimpleXMLElement Object
+(
+    [Data] => SimpleXMLElement Object
+        (
+            [MerchantID] => 2000132
+            [MerchantTradeNo] => ABDF1234138
+            [TradeNo] => 20131227123201944699
+            [RtnCode] => 1
+            [gwsr] => 10261110
+            [process_date] => 2013/12/27 12:32:22
+            [auth_code] => 777777
+            [amount] => 13434
+            [stage] => 0
+            [stast] => 0
+            [staed] => 0
+            [eci] => 0
+            [card4no] => 2222
+            [card6no] => 431195
+            [red_dan] => 0
+            [red_de_amt] => 0
+            [red_ok_amt] => 0
+            [red_yet] => 0
+        )
+
+)

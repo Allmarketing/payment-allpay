@@ -1,5 +1,5 @@
 <?php
-$cms_cfg['creditcard']['MerchantID'] = "2000132";//特店代碼
+$cms_cfg['creditcard']['MerchantID'] = "";//特店代碼
 $cms_cfg['creditcard']['PaymentType'] = "CREDIT";//信用卡固定CREDIT
 //信用卡卡號，若要在AllPay顯示信用卡頁讓使用者輸入的話，請放0。 連同下面的CardValidMM、 CardValidYY及 CardCVV2也都請放0
 $cms_cfg['creditcard']['params']['CardNo'] = 0;        
@@ -16,6 +16,6 @@ $cms_cfg['creditcard']['params']['Redeem'] = '';       //請放空值。設為Y�
 $cms_cfg['creditcard']['params']['ReturnURL'] = "http://localhost/payment_allpay/card-test3.php"; //接收授權結果通知網址(以client post方式返回)
 $cms_cfg['creditcard']['params']['ServerReplyURL'] = "http://localhost/payment_allpay/card-test3.php"; //接收授權結果通知網址(以server post方式返回)
 $cms_cfg['creditcard']['params']['ClientBackURL'] = ""; //授權結果頁給使用者點選後，導回商家的回傳網址。
-$cms_cfg['Hash']['Key'] = "ejCk326UnaZWKisg";
-$cms_cfg['Hash']['IV'] = "q9jcZX8Ib9LM8wYk";
+$cms_cfg['Hash']['Key'] = "";
+$cms_cfg['Hash']['IV'] = "";
 ?>

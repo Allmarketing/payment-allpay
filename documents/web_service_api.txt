@@ -1,0 +1,51 @@
+Array
+(
+    [0] => CreateTradeResponse CreateTrade(CreateTrade $parameters)
+    [1] => VerifyOrderByOtpResponse VerifyOrderByOtp(VerifyOrderByOtp $parameters)
+    [2] => ResendOtpResponse ResendOtp(ResendOtp $parameters)
+    [3] => QueryTradeResponse QueryTrade(QueryTrade $parameters)
+    [4] => QueryPeriodTradeResponse QueryPeriodTrade(QueryPeriodTrade $parameters)
+    [5] => CreateTradeResponse CreateTrade(CreateTrade $parameters)
+    [6] => VerifyOrderByOtpResponse VerifyOrderByOtp(VerifyOrderByOtp $parameters)
+    [7] => ResendOtpResponse ResendOtp(ResendOtp $parameters)
+    [8] => QueryTradeResponse QueryTrade(QueryTrade $parameters)
+    [9] => QueryPeriodTradeResponse QueryPeriodTrade(QueryPeriodTrade $parameters)
+)
+Array
+(
+    [0] => struct CreateTrade {
+         long merchantID;
+         string xmlData;
+    }
+    [1] => struct CreateTradeResponse {
+         string CreateTradeResult;
+    }
+    [2] => struct VerifyOrderByOtp {
+         long merchantID;
+         string xmlData;
+    }
+    [3] => struct VerifyOrderByOtpResponse {
+         string VerifyOrderByOtpResult;
+    }
+    [4] => struct ResendOtp {
+         long merchantID;
+         string xmlData;
+    }
+    [5] => struct ResendOtpResponse {
+         string ResendOtpResult;
+    }
+    [6] => struct QueryTrade {
+         long merchantID;
+         string merchantTradeNo;
+    }
+    [7] => struct QueryTradeResponse {
+         string QueryTradeResult;
+    }
+    [8] => struct QueryPeriodTrade {
+         long merchantID;
+         string merchantTradeNo;
+    }
+    [9] => struct QueryPeriodTradeResponse {
+         string QueryPeriodTradeResult;
+    }
+)

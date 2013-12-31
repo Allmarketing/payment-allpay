@@ -47,19 +47,36 @@ class Model_Order_Payment_Allpay {
             ));
         }
         $tpl->printToScreen();
+        die();
     }
     //更新訂單
-    function update_order($db,SimpleXMLElement $result){
+    function update_order(DB $db,SimpleXMLElement $result){
+        global $main;
         $oid = $result->Data->MerchantTradeNo;
         if($result->Data->RtnCode=='1'){ //交易成功
-            $sql = "update ".$db->prefix("order")." set some_col = 'somevalue' .... where o_id='".$oid."'";
+            $sql = "update ".$db->prefix("order")." set "
+                    . "o_status='1', "
+                    . "TradeNo = '".$result->Data->TradeNo."', "
+                    . "RtnCode = '".$result->Data->RtnCode."', "
+                    . "gwsr = '".$result->Data->gwsr."', "
+                    . "process_date = '".$result->Data->process_date."', "
+                    . "auth_code = '".$result->Data->auth_code."' "
+                    . "where o_id='".$oid."'";
         }else{
             //更新訂單狀態
-            if($result->Data->RtnCode!='10100054'){ //錯誤原因非訂單編號重複
-                $sql = "update ".$db->prefix("order")." set o_status='10' where o_id='".$oid."'";
+            if(!in_array($result->Data->RtnCode,'10100054','10100089')){ //錯誤原因非訂單編號重複
+                $sql = "update ".$db->prefix("order")." set "
+                        . "o_status='10', "
+                        . "TradeNo = '".$result->Data->TradeNo."', "
+                        . "RtnCode = '".$result->Data->RtnCode."', "
+                        . "gwsr = '".$result->Data->gwsr."', "
+                        . "process_date = '".$result->Data->process_date."', "
+                        . "auth_code = '".$result->Data->auth_code."' "
+                        . "where o_id='".$oid."'";
+                $main->update_order_stock(10,$oid);
             }
         }
-         return $sql;
+        $db->query($sql);
     }
     /*製作xml*/
     function make_xml(){

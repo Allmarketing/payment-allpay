@@ -92,5 +92,14 @@ class Model_Order_Payment_Allpay {
         $XMLdata =  $tpl->getOutputContent();
         return Mcrypt_Aes::aes128cbcEncrypt($XMLdata , $this->hash['IV'] , $this->hash['Key']);
     }
+    //解析授權回轉結果
+    function parse_xmldata($postdata){
+        if($postdata){
+            $postdata = str_replace(" ", "+", $postdata);
+            $xmldata = Mcrypt_Aes::aes128cbcDecrypt($postdata, $this->hash['IV'], $this->hash['Key']);
+            $returnXML = new SimpleXMLElement($xmldata);        
+        }
+        return $returnXML;
+    }
     
 }

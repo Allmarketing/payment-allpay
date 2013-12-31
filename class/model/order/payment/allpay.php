@@ -51,7 +51,6 @@ class Model_Order_Payment_Allpay {
     }
     //更新訂單
     function update_order(DB $db,SimpleXMLElement $result){
-        global $main;
         $oid = $result->Data->MerchantTradeNo;
         if($result->Data->RtnCode=='1'){ //交易成功
             $sql = "update ".$db->prefix("order")." set "
@@ -73,7 +72,6 @@ class Model_Order_Payment_Allpay {
                         . "process_date = '".$result->Data->process_date."', "
                         . "auth_code = '".$result->Data->auth_code."' "
                         . "where o_id='".$oid."'";
-                $main->update_order_stock(10,$oid);
             }
         }
         $db->query($sql);

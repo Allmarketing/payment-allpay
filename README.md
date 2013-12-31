@@ -36,6 +36,13 @@ api說明
     2.$total_price:訂單價格.
     3.$extra_info:額外的欄位，預設是空陣列，也就是不加新欄位，如果要加新欄位，請以關聯式陣列輸入，例如: array('email'=>'xxxx@some.domain','tel'=>'88881888').
 
+### Model_Order_Payment_Allpay::parse_xmldatat($postdata)
+
+    1.$postdata:傳入歐付寶授權回傳的$_POST['XMLData']
+> 說明:此函數是作為回傳結果的解密之用， 解密之前需先將回傳結果的空白取代為+<br/>
+>      解密後得到一份xml資料，將此xml丟給SimpleXMLElement產生SimpleXMLElement物件，<br/>
+>      以利進一步利用。
+
 
 ### Model_Order_Payment_Allpay::update_order($db,SimpleXMLElement $result)
 

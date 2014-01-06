@@ -12,8 +12,7 @@ $tpl->prepare();
 /*初始化payment物件*/
 $card = new Model_Order_Payment_Allpay($cms_cfg['creditcard'], $cms_cfg['Hash'],$cms_cfg['exe_mode']);
 /*解析回傳結果*/
-$xmldata = mcrypt_aes::aes128cbcDecrypt($_POST['XMLData'], $cms_cfg['Hash']['IV'], $cms_cfg['Hash']['Key']);
-$returnXML = new SimpleXMLElement($xmldata);
+$returnXML = $card->parse_xmldata($_POST['XMLData']);
 /*更新訂單*/
 $sql = $card->update_order($db,$returnXML);
 /*輸出回傳結果*/

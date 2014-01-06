@@ -7,9 +7,9 @@ payment-allpay
 前置設定
 ---------------
 1.設定conf/creditcard.php裡的 $cms_cfg['creditcard']['MerchantID'] (特店編號)、 $cms_cfg['creditcard']['params']各項目及$cms_cfg['Hash']各項目。<br/>
-2.Model_Order_Payment_Returncode_Allpay裡的項目會持續新增，請不定時至廠商後台->系統開發管理->交易狀態代碼查詢。
-3.$cms_cfg['Hash']的Key及IV在廠商後台->基本資料查詢->廠商基本資料查詢，請依序填入[一般金流介接HashKey]及[一般金流介接HashIV]
-4.歐付寶信用卡串接會使用AES加密，請確認class/mcrypt/aes.php存在，才可以正確執行加、解密的操作。
+2.Model_Order_Payment_Returncode_Allpay裡的項目會持續新增，請不定時至廠商後台->系統開發管理->交易狀態代碼查詢。<br/>
+3.$cms_cfg['Hash']的Key及IV在廠商後台->基本資料查詢->廠商基本資料查詢，請依序填入[一般金流介接HashKey]及[一般金流介接HashIV]<br/>
+4.歐付寶信用卡串接會使用AES加密，請確認class/mcrypt/aes.php存在，才可以正確執行加、解密的操作。<br/>
 
 
 測試流程

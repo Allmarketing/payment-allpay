@@ -18,4 +18,5 @@ $cms_cfg['creditcard']['params']['ServerReplyURL'] = "http://localhost/payment_a
 $cms_cfg['creditcard']['params']['ClientBackURL'] = ""; //授權結果頁給使用者點選後，導回商家的回傳網址。
 $cms_cfg['Hash']['Key'] = "";
 $cms_cfg['Hash']['IV'] = "";
+$cms_cfg['exe_mode'] = "testing";  //執行模式: testing or running
 ?>

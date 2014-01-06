@@ -74,7 +74,8 @@ class Model_Order_Payment_Allpay {
                         . "where o_id='".$oid."'";
             }
         }
-        $db->query($sql);
+        //$db->query($sql);
+        return $sql;
     }
     /*製作xml*/
     function make_xml(){

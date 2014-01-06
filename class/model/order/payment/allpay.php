@@ -75,6 +75,8 @@ class Model_Order_Payment_Allpay {
             }
         }
         //$db->query($sql);
+        //$sql = "select * from ".$db->prefix("order")." where o_id='".$oid."'";
+        //return $db->query_firstRow($sql,true);
         return $sql;
     }
     /*製作xml*/

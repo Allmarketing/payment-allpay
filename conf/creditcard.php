@@ -16,7 +16,7 @@ $cms_cfg['creditcard']['params']['Redeem'] = '';       //請放空值。設為Y�
 $cms_cfg['creditcard']['params']['ReturnURL'] = "http://localhost/payment_allpay/card-test3.php"; //接收授權結果通知網址(以client post方式返回)
 $cms_cfg['creditcard']['params']['ServerReplyURL'] = "http://localhost/payment_allpay/card-test3.php"; //接收授權結果通知網址(以server post方式返回)
 $cms_cfg['creditcard']['params']['ClientBackURL'] = ""; //授權結果頁給使用者點選後，導回商家的回傳網址。
-$cms_cfg['Hash']['Key'] = "";
-$cms_cfg['Hash']['IV'] = "";
-$cms_cfg['exe_mode'] = "testing";  //執行模式: testing or running
+$cms_cfg['creditcard']['Hash']['Key'] = "";
+$cms_cfg['creditcard']['Hash']['IV'] = "";
+$cms_cfg['creditcard']['exe_mode'] = "testing";  //執行模式: testing or running
 ?>

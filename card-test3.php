@@ -10,7 +10,7 @@ $db = new DB($cms_cfg['db_host'],$cms_cfg['db_user'],$cms_cfg['db_password'],$cm
 $tpl = new TemplatePower("test3.html");
 $tpl->prepare();
 /*初始化payment物件*/
-$card = new Model_Order_Payment_Allpay($cms_cfg['creditcard'], $cms_cfg['Hash'],$cms_cfg['exe_mode']);
+$card = new Model_Order_Payment_Allpay($cms_cfg['creditcard']);
 /*解析回傳結果*/
 $returnXML = $card->parse_xmldata($_POST['XMLData']);
 /*更新訂單*/
